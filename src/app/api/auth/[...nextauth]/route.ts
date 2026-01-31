@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { compare } from 'bcryptjs'
 import prisma from '@/lib/prisma'
 
+// Force dynamic to prevent build-time execution
+export const dynamic = 'force-dynamic'
+
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({

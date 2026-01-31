@@ -4,6 +4,9 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import prisma from '@/lib/prisma'
 import { canAccessPatient } from '@/lib/auth'
 
+// Force dynamic to prevent build-time execution
+export const dynamic = 'force-dynamic'
+
 // GET /api/patients/[id] - Get patient details
 export async function GET(
     request: NextRequest,

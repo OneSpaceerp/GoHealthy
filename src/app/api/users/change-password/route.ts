@@ -4,6 +4,9 @@ import { compare, hash } from 'bcryptjs'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import prisma from '@/lib/prisma'
 
+// Force dynamic to prevent build-time execution
+export const dynamic = 'force-dynamic'
+
 // PUT /api/users/change-password - Change user password
 export async function PUT(request: NextRequest) {
     try {

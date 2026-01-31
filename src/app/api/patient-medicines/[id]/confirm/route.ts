@@ -3,6 +3,9 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import prisma from '@/lib/prisma'
 
+// Force dynamic to prevent build-time execution
+export const dynamic = 'force-dynamic'
+
 // PUT /api/patient-medicines/[id]/confirm - Confirm medicine intake
 export async function PUT(
     request: NextRequest,
