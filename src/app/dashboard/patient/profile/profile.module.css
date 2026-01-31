@@ -1,0 +1,21 @@
+.page {
+    max-width: 800px;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: var(--space-6) 0;
+}
+
+@media (max-width: 768px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}

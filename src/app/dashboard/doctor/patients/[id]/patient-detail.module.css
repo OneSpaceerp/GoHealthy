@@ -1,0 +1,66 @@
+.page {
+    max-width: 1200px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.infoItem {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.infoItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.infoLabel {
+    color: var(--gray-500);
+}
+
+.infoValue {
+    font-weight: 500;
+    color: var(--gray-900);
+}
+
+.imagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-4);
+}
+
+.imageCard {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--gray-50);
+}
+
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 1;
+}
+
+.imageInfo {
+    padding: var(--space-2);
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+}

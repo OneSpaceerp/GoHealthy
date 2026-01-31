@@ -1,0 +1,33 @@
+.page {
+    max-width: 1200px;
+}
+
+.filters {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.searchForm {
+    display: flex;
+    gap: var(--space-2);
+    flex: 1;
+    max-width: 400px;
+}
+
+.searchForm .form-input {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .searchForm {
+        max-width: none;
+    }
+}

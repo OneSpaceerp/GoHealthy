@@ -1,0 +1,35 @@
+.page {
+    max-width: 1200px;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.quickActions {
+    margin-bottom: var(--space-6);
+}
+
+.actionButtons {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+    }
+
+    .actionButtons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,32 @@
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.toggle:hover {
+    border-color: var(--primary);
+}
+
+.option {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--gray-500);
+    transition: color var(--transition-fast);
+}
+
+.option.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.separator {
+    color: var(--gray-300);
+    font-size: var(--font-size-xs);
+}

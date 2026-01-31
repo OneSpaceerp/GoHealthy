@@ -1,0 +1,45 @@
+.page {
+    max-width: 1200px;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.summaryCard {
+    text-align: center;
+}
+
+.change {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-top: var(--space-2);
+}
+
+.positive {
+    color: var(--success);
+}
+
+.negative {
+    color: var(--error);
+}
+
+.chartContainer {
+    width: 100%;
+    height: 300px;
+}
+
+@media (max-width: 1024px) {
+    .summaryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+}

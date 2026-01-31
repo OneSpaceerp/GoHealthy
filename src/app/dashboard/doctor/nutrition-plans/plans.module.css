@@ -1,0 +1,54 @@
+.page {
+    max-width: 1200px;
+}
+
+.plansGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-6);
+}
+
+.planTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin: 0;
+    color: var(--gray-900);
+}
+
+.planDesc {
+    color: var(--gray-600);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.planMacros {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-3);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+}
+
+.planMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.planDate {
+    font-size: var(--font-size-xs);
+    color: var(--gray-500);
+}
+
+@media (max-width: 768px) {
+    .plansGrid {
+        grid-template-columns: 1fr;
+    }
+}

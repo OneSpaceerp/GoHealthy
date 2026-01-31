@@ -1,0 +1,92 @@
+.page {
+    max-width: 1000px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+}
+
+.imageCard {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+}
+
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 1;
+    background-color: var(--gray-100);
+}
+
+.imageInfo {
+    padding: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imageDate {
+    font-size: var(--font-size-xs);
+    color: var(--gray-500);
+}
+
+.uploadArea {
+    margin-top: var(--space-4);
+}
+
+.dropzone {
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--gray-500);
+}
+
+.dropzone:hover {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.dropzoneIcon {
+    font-size: 48px;
+}
+
+.previewContainer {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--gray-100);
+}
+
+.removeBtn {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--error);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hiddenInput {
+    display: none;
+}

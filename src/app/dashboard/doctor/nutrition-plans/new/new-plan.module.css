@@ -1,0 +1,63 @@
+.page {
+    max-width: 900px;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+.macrosGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+}
+
+.mealsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.mealItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+}
+
+.mealInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.mealMacros {
+    font-size: var(--font-size-sm);
+    color: var(--gray-500);
+}
+
+.addMealForm {
+    padding: var(--space-4);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.addMealForm h4 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--font-size-lg);
+}
+
+@media (max-width: 768px) {
+
+    .formGrid,
+    .macrosGrid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,185 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum DayType {
+  DAY_1
+  DAY_15
+  DAY_30
+}
+
+enum ImageType {
+  FRONT
+  SIDE
+  BACK
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  name          String
+  role          Role      @default(PATIENT)
+  language      String    @default("en")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  patient       Patient?  @relation("UserPatient")
+  doctorPatients Patient[] @relation("DoctorPatients")
+  nutritionPlans NutritionPlan[] @relation("DoctorPlans")
+  medicines     Medicine[] @relation("DoctorMedicines")
+  auditLogs     AuditLog[]
+}
+
+model Patient {
+  id                  String    @id @default(cuid())
+  userId              String    @unique
+  user                User      @relation("UserPatient", fields: [userId], references: [id], onDelete: Cascade)
+  
+  fullName            String
+  age                 Int
+  gender              Gender
+  height              Float     // cm
+  weight              Float     // kg
+  medicalConditions   String?   @db.Text
+  allergies           String?   @db.Text
+  currentMedications  String?   @db.Text
+  notes               String?   @db.Text
+  startDate           DateTime  @default(now())
+  
+  doctorId            String?
+  doctor              User?     @relation("DoctorPatients", fields: [doctorId], references: [id])
+  
+  measurements        Measurement[]
+  images              PatientImage[]
+  nutritionPlan       NutritionPlan? @relation("PatientPlan")
+  medicines           PatientMedicine[]
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Measurement {
+  id                  String    @id @default(cuid())
+  patientId           String
+  patient             Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  
+  dayType             DayType
+  weight              Float?    // kg
+  armCircumference    Float?    // cm - relaxed arm
+  waistOnNavel        Float?    // cm - on the navel
+  waistAboveNavel     Float?    // cm - 4 fingers above navel
+  hipCircumference    Float?    // cm - distance between hip bones
+  thighCircumference  Float?    // cm - midpoint between hip and knee
+  
+  measuredAt          DateTime  @default(now())
+  notes               String?   @db.Text
+  
+  createdAt           DateTime  @default(now())
+}
+
+model PatientImage {
+  id          String    @id @default(cuid())
+  patientId   String
+  patient     Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  
+  dayType     DayType
+  imageType   ImageType
+  imagePath   String
+  notes       String?   @db.Text
+  
+  uploadedAt  DateTime  @default(now())
+}
+
+model NutritionPlan {
+  id              String    @id @default(cuid())
+  doctorId        String
+  doctor          User      @relation("DoctorPlans", fields: [doctorId], references: [id])
+  
+  patientId       String?   @unique
+  patient         Patient?  @relation("PatientPlan", fields: [patientId], references: [id])
+  
+  title           String
+  description     String?   @db.Text
+  meals           Json      // Array of meal objects
+  totalCalories   Int
+  proteinGrams    Int
+  carbsGrams      Int
+  fatsGrams       Int
+  allowedFoods    String?   @db.Text
+  restrictedFoods String?   @db.Text
+  supplements     String?   @db.Text
+  
+  startDate       DateTime?
+  endDate         DateTime?
+  isActive        Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Medicine {
+  id          String    @id @default(cuid())
+  doctorId    String
+  doctor      User      @relation("DoctorMedicines", fields: [doctorId], references: [id])
+  
+  name        String
+  description String?   @db.Text
+  
+  patients    PatientMedicine[]
+  
+  createdAt   DateTime  @default(now())
+}
+
+model PatientMedicine {
+  id          String    @id @default(cuid())
+  patientId   String
+  patient     Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  
+  medicineId  String
+  medicine    Medicine  @relation(fields: [medicineId], references: [id])
+  
+  dosage      String
+  frequency   String
+  durationDays Int
+  notes       String?   @db.Text
+  confirmed   Boolean   @default(false)
+  startDate   DateTime  @default(now())
+  
+  createdAt   DateTime  @default(now())
+  
+  @@unique([patientId, medicineId])
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  action      String
+  entityType  String
+  entityId    String?
+  changes     Json?
+  
+  createdAt   DateTime  @default(now())
+}
