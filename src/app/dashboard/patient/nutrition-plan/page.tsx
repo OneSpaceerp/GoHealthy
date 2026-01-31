@@ -56,7 +56,7 @@ export default async function PatientNutritionPlanPage() {
         )
     }
 
-    const meals = plan.meals as Meal[]
+    const meals = plan.meals as unknown as Meal[]
 
     return (
         <div className={styles.page}>
