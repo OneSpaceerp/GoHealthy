@@ -1,5 +1,3 @@
-import { Pool } from 'pg'
-import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
 
 declare global {
@@ -7,26 +5,49 @@ declare global {
   var prisma: PrismaClient | undefined
 }
 
-function createPrismaClient(): PrismaClient {
+// Lazy initialization - only create when DATABASE_URL is available
+function getPrismaClient(): PrismaClient {
+  if (global.prisma) {
+    return global.prisma
+  }
+
   const connectionString = process.env.DATABASE_URL
 
-  // During build time, DATABASE_URL might not be available
   if (!connectionString) {
-    // Return a basic client for build-time - it won't be used for actual queries
-    return new PrismaClient()
+    throw new Error(
+      'DATABASE_URL environment variable is not set. ' +
+      'Please configure your database connection in Vercel environment variables.'
+    )
   }
+
+  // Dynamic import to avoid build-time issues
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { Pool } = require('pg')
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { PrismaPg } = require('@prisma/adapter-pg')
 
   const pool = new Pool({ connectionString })
   const adapter = new PrismaPg(pool)
+  const client = new PrismaClient({ adapter })
 
-  return new PrismaClient({ adapter })
+  if (process.env.NODE_ENV !== 'production') {
+    global.prisma = client
+  }
+
+  return client
 }
 
-const prisma = global.prisma ?? createPrismaClient()
-
-if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma
-}
+// Export a proxy that lazily initializes the client
+const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop: string | symbol) {
+    const client = getPrismaClient()
+    const value = client[prop as keyof PrismaClient]
+    if (typeof value === 'function') {
+      return value.bind(client)
+    }
+    return value
+  },
+})
 
 export { prisma }
 export default prisma
